@@ -3,6 +3,11 @@ import { TaskContext } from "./TaskContext";
 
 export default function TaskListProvider({ children }) {
   const [tasks, setTasks] = useState([]);
+
+  function addTask(task) {
+    setTasks(...tasks, task);
+  }
+
   useEffect(() => {
     setTasks([
       {
@@ -30,7 +35,7 @@ export default function TaskListProvider({ children }) {
   }, []);
 
   return (
-    <TaskContext.Provider value={{ tasks, setTasks }}>
+    <TaskContext.Provider value={{ tasks, setTasks, addTask }}>
       {children}
     </TaskContext.Provider>
   );
