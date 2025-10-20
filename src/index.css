@@ -1,0 +1,10 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.ant-modal-close {
+  top: 0 !important;
+  inset-inline-end: 0 !important;
+}
