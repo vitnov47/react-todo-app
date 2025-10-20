@@ -1,6 +1,6 @@
-import {useContext} from 'react'
-import {TaskContext} from './TaskContext'
+import { useContext } from "react";
+import { TaskContext } from "./TaskContext";
 
-export default function useTasks(){
-    return useContext(TaskContext)
+export default function useTasks() {
+  return useContext(TaskContext);
 }

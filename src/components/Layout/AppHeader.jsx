@@ -1,9 +1,5 @@
 import { Layout, Typography, Button, Modal } from "antd";
-import {
-  UnorderedListOutlined,
-  PlusOutlined,
-  CloseOutlined,
-} from "@ant-design/icons";
+import { UnorderedListOutlined, PlusOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import FormTask from "../FormTask";
 
