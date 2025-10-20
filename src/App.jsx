@@ -1,19 +1,11 @@
 import AppLayout from "./components/Layout/AppLayout";
-import { ConfigProvider } from "antd";
+import TaskListProvider from "./TaskListProvider";
 
 function App() {
   return (
-    <ConfigProvider
-      theme={{
-        token: {
-          margin: 0,
-          padding: 0,
-          colorPrimary: "#1890ff",
-        },
-      }}
-    >
+    <TaskListProvider>
       <AppLayout />
-    </ConfigProvider>
+    </TaskListProvider>
   );
 }
 
