@@ -2,6 +2,7 @@ import { Card, Space, Typography, Flex, Divider } from "antd";
 import { CommentOutlined } from "@ant-design/icons";
 import { definePriority } from "../utils";
 import useTasks from "../context/useTasks";
+import "../styles/cardStyle.css";
 
 export default function CardList() {
   const { tasks } = useTasks();
@@ -13,7 +14,11 @@ export default function CardList() {
           <Card
             key={task.id}
             hoverable
-            style={{ border: `${priorityInfo.color} 2px solid` }}
+            style={{
+              border: `${priorityInfo.color} 2px solid`,
+              transition: "transform 0.2s ease, box-shadow 0.2s ease",
+            }}
+            className="task-card"
           >
             <Flex align="center">
               {priorityInfo.icon}

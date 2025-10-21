@@ -2,6 +2,7 @@ import { Layout, Typography, Button, Modal } from "antd";
 import { UnorderedListOutlined, PlusOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import FormTask from "../FormTask";
+import "../../styles/headerButton.css";
 
 export default function AppHeader() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -28,6 +29,8 @@ export default function AppHeader() {
         shape="round"
         icon={<PlusOutlined />}
         size={"middle"}
+        className="header-button"
+        style={{ transition: "transform 0.2s ease, box-shadow 0.2s ease" }}
       >
         Добавить задачу
       </Button>
