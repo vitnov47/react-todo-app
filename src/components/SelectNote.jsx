@@ -2,7 +2,7 @@ import { Select, Divider, Space, Input, Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { useState, useRef } from "react";
 
-export default function SelectNote() {
+export default function SelectNote({ setNote }) {
   const [items, setItems] = useState([
     "Учеба",
     "Семья",
@@ -11,10 +11,16 @@ export default function SelectNote() {
     "Дом",
   ]);
   const [name, setName] = useState("");
+  const [openSelect, setOpenSelect] = useState(false);
   const inputRef = useRef(null);
 
   const onNameChange = (event) => {
     setName(event.target.value);
+  };
+
+  const changeNote = (value) => {
+    setNote(value);
+    setOpenSelect(false);
   };
 
   const addItem = (e) => {
@@ -27,6 +33,7 @@ export default function SelectNote() {
   };
   return (
     <Select
+      onChange={changeNote}
       placeholder="Пометка"
       popupRender={(menu) => (
         <>

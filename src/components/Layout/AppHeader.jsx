@@ -10,6 +10,7 @@ export default function AppHeader() {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
+    paddingInline: "3rem",
   };
 
   return (

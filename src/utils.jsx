@@ -6,43 +6,51 @@ import {
   faDiceFour,
 } from "@fortawesome/free-solid-svg-icons";
 
-export function defineIcon(priority) {
+export function definePriority(priority) {
+  let icon = 0;
+  let color = "#0300FF";
+  let priorityName = "Ошибочка вышла..";
   switch (priority) {
     case "low":
-      return (
+      icon = (
         <FontAwesomeIcon
           icon={faDiceOne}
-          style={{ width: "3rem", height: "3rem" }}
+          style={{ width: "4rem", height: "4rem" }}
         />
       );
+      color = "#58F55A";
+      priorityName = "Низкий";
+      break;
     case "middle":
-      return (
+      icon = (
         <FontAwesomeIcon
           icon={faDiceTwo}
-          style={{ width: "3rem", height: "3rem" }}
+          style={{ width: "4rem", height: "4rem" }}
         />
       );
+      color = "#E6E62E";
+      priorityName = "Средний";
+      break;
     case "high":
-      return (
+      icon = (
         <FontAwesomeIcon
           icon={faDiceThree}
-          style={{ width: "3rem", height: "3rem" }}
+          style={{ width: "4rem", height: "4rem" }}
         />
       );
+      color = "#F2AE00";
+      priorityName = "Высокий";
+      break;
     case "unbelievable":
-      return (
+      icon = (
         <FontAwesomeIcon
           icon={faDiceFour}
-          style={{ width: "3rem", height: "3rem" }}
+          style={{ width: "4rem", height: "4rem" }}
         />
       );
-    default:
-      return 0;
+      color = "#F72D1E";
+      priorityName = "Ну капец какой";
+      break;
   }
+  return { icon, color, priorityName };
 }
-
-// export function defineColor(priority){
-
-// }
-
-// КАКОГО КАРТОЧКИ В КОНТЕНТЕ ЛЕЖАТ НЕ ВНУТРИ LAYOUT???
