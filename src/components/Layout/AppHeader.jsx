@@ -1,7 +1,7 @@
 import { Layout, Typography, Button, Modal } from "antd";
 import { UnorderedListOutlined, PlusOutlined } from "@ant-design/icons";
 import { useState } from "react";
-import FormTask from "../FormTask";
+import ModalCreate from "../ModalCreate";
 import "../../styles/headerButton.css";
 
 export default function AppHeader() {
@@ -12,6 +12,7 @@ export default function AppHeader() {
     alignItems: "center",
     justifyContent: "space-between",
     paddingInline: "3rem",
+    height: "8vh",
   };
 
   return (
@@ -41,7 +42,7 @@ export default function AppHeader() {
         onCancel={() => setModalOpen(false)}
         footer={null}
       >
-        <FormTask
+        <ModalCreate
           onClose={() => {
             setModalOpen(false);
           }}

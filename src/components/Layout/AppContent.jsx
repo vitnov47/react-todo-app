@@ -7,6 +7,7 @@ export default function AppContent() {
     paddingInline: "3rem",
     paddingBlock: "1rem",
     backgroundColor: "#3E19B5",
+    minHeight: "92vh",
   };
 
   return (

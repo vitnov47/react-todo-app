@@ -1,4 +1,26 @@
+.task-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease,
+    background-color 0.3s ease;
+  position: "relative";
+}
+
 .task-card:hover {
   transform: scale(1.07);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  background-color: #0cff03ad;
+}
+
+.task-card .completed-text {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+  display: none;
+}
+
+.task-card:hover .completed-text {
+  display: block;
 }
