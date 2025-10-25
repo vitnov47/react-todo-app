@@ -1,29 +1,53 @@
 import { Form, Input, Button, Flex, Select, DatePicker } from "antd";
+import { useState, useEffect } from "react";
+import { EditOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 import SelectNote from "./SelectNote";
 import useTasks from "../context/useTasks";
-import { useState } from "react";
-import { EditOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 
-export default function ModalForm({ onClose, type }) {
+export default function ModalForm({ onClose, type, editId }) {
   const [form] = Form.useForm();
   const [priority, setPriority] = useState("low");
   const [note, setNote] = useState();
-  const { addTask } = useTasks();
+  const { tasks, addTask } = useTasks();
+  let oldTask = {};
+
+  useEffect(() => {
+    if (editId) {
+      oldTask = tasks.find((task) => task.id === editId);
+      if (oldTask) {
+        console.log(oldTask);
+        form.setFieldsValue({
+          name: oldTask.name,
+          priority: oldTask.priority,
+          dates: 0,
+          // dates: [
+          //   moment(oldTask.startDate, "DD-MM-YYYY"),
+          //   moment(oldTask.endDate, "DD-MM-YYYY"),
+          // ],
+          note: oldTask.note,
+        });
+        setPriority(oldTask.priority);
+        setNote(oldTask.note);
+      }
+    }
+  }, [editId]);
 
   const onReset = () => {
     form.resetFields();
   };
 
   const onFinish = (values) => {
-    const task = {
-      id: crypto.randomUUID(),
-      name: values.name,
-      priority: priority,
-      startDate: values.dates[0].format("DD-MM-YYYY"),
-      endDate: values.dates[1].format("DD-MM-YYYY"),
-      note: note,
-    };
-    addTask(task);
+    if (type === "create") {
+      const task = {
+        id: crypto.randomUUID(),
+        name: values.name,
+        priority: priority,
+        startDate: values.dates[0].format("DD-MM-YYYY"),
+        endDate: values.dates[1].format("DD-MM-YYYY"),
+        note: note,
+      };
+      addTask(task);
+    }
     onClose();
   };
 
@@ -70,7 +94,11 @@ export default function ModalForm({ onClose, type }) {
       </Form.Item>
 
       <Form.Item label="Пометка" name="note">
-        <SelectNote setNote={setNote} />
+        {oldTask ? (
+          <SelectNote setNote={setNote} oldNote={oldTask.note} />
+        ) : (
+          <SelectNote setNote={setNote} />
+        )}
       </Form.Item>
 
       <Flex justify="flex-end" gap="small">
@@ -83,9 +111,13 @@ export default function ModalForm({ onClose, type }) {
         >
           Очистить
         </Button>
-        {type === "create" && (
+        {type === "create" ? (
           <Button type="primary" htmlType="submit">
             Добавить
+          </Button>
+        ) : (
+          <Button type="primary" htmlType="submit">
+            Изменить
           </Button>
         )}
       </Flex>

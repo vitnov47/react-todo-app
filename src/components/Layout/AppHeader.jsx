@@ -1,8 +1,12 @@
-import { Layout, Typography, Button, Modal } from "antd";
-import { UnorderedListOutlined, PlusOutlined } from "@ant-design/icons";
+import { Layout, Typography, Button, Modal, Flex, Divider } from "antd";
+import {
+  UnorderedListOutlined,
+  PlusOutlined,
+  FileAddOutlined,
+} from "@ant-design/icons";
 import { useState } from "react";
-import ModalCreate from "../ModalCreate";
 import "../../styles/headerButton.css";
+import ModalForm from "../ModalForm";
 
 export default function AppHeader() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -42,11 +46,16 @@ export default function AppHeader() {
         onCancel={() => setModalOpen(false)}
         footer={null}
       >
-        <ModalCreate
-          onClose={() => {
-            setModalOpen(false);
-          }}
-        />
+        <Flex gap="5px">
+          <FileAddOutlined style={{ fontSize: "2rem", color: "#078ff0" }} />
+          <Typography.Title level={2} style={{ marginBottom: 0 }}>
+            Новое дельце
+          </Typography.Title>
+        </Flex>
+
+        <Divider />
+
+        <ModalForm onClose={() => setModalOpen(false)} type="create" />
       </Modal>
     </Layout.Header>
   );

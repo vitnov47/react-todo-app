@@ -1,4 +1,13 @@
-import { Card, Space, Typography, Flex, Divider, Button, Result } from "antd";
+import {
+  Card,
+  Space,
+  Typography,
+  Flex,
+  Divider,
+  Button,
+  Result,
+  Modal,
+} from "antd";
 import {
   CommentOutlined,
   DeleteOutlined,
@@ -8,11 +17,14 @@ import { definePriority } from "../utils";
 import useTasks from "../context/useTasks";
 import "../styles/cardStyle.css";
 import { useState, useEffect } from "react";
+import ModalEdit from "./ModalEdit";
 
 export default function CardList() {
   const { tasks, setTasks } = useTasks();
   const [completedTasks, setCompletedTasks] = useState({});
   const [removalQueue, setRemovalQueue] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [editId, setEditId] = useState();
 
   useEffect(() => {
     if (removalQueue.length > 0) {
@@ -31,22 +43,23 @@ export default function CardList() {
     }
   }, [removalQueue]);
 
+  const stopPropagation = (event) => {
+    event.stopPropagation();
+  };
+
   const removeTask = (removeId) => {
     setTasks(tasks.filter((task) => task.id != removeId));
+  };
+
+  const editTask = (editId) => {
+    setEditId(editId);
+    setModalOpen(true);
   };
 
   const completeTask = (completeId) => {
     setCompletedTasks((prev) => ({ ...prev, [completeId]: true }));
     setRemovalQueue((prev) => [...prev, completeId]);
   };
-
-  // const editTask = (editId) => {
-  //   tasks.map((task) => {
-  //     if (task.id === editId){
-  //     }
-  //     return task
-  //   })
-  // };
 
   return (
     <Space direction="vertical" style={{ width: "30%" }} size="middle">
@@ -62,7 +75,10 @@ export default function CardList() {
                     <Button
                       color="purple"
                       variant="outlined"
-                      onClick={() => editTask(task.id)}
+                      onClick={(e) => {
+                        stopPropagation(e);
+                        editTask(task.id);
+                      }}
                       style={{ width: "80%  " }}
                     >
                       <EditOutlined />
@@ -70,7 +86,10 @@ export default function CardList() {
                     <Button
                       color="danger"
                       variant="outlined"
-                      onClick={() => removeTask(task.id)}
+                      onClick={(e) => {
+                        stopPropagation(e);
+                        removeTask(task.id);
+                      }}
                       style={{
                         width: "80%",
                       }}
@@ -134,12 +153,20 @@ export default function CardList() {
                   </Space>
                 </Flex>
 
-                <div className="completed-text">Выполнено</div>
+                <div className="completed-text">Выполнено?</div>
               </>
             )}
           </Card>
         );
       })}
+      <Modal
+        closable={{ "aria-label": "Custom Close Button" }}
+        open={modalOpen}
+        onCancel={() => setModalOpen(false)}
+        footer={null}
+      >
+        <ModalEdit onClose={() => setModalOpen(false)} editId={editId} />
+      </Modal>
     </Space>
   );
 }
