@@ -13,13 +13,6 @@ export default function SelectNote({ setNote, oldNote }) {
   const [name, setName] = useState("");
   const inputRef = useRef(null);
 
-  // НУЖНО ЧТОБЫ ПРИ РЕДАКТИРОВАНИИ ПОМЕТКА БЫЛА СТАРОЙ, А НЕ ПУСТОЙ
-  // useEffect(() => {
-  //   if (oldNote) {
-  //     setName(oldNote);
-  //   }
-  // }, []);
-
   const onNameChange = (event) => {
     setName(event.target.value);
   };
@@ -39,7 +32,7 @@ export default function SelectNote({ setNote, oldNote }) {
 
   return (
     <Select
-      //value={oldNote}
+      value={oldNote}
       onChange={changeNote}
       placeholder="Пометка"
       popupRender={(menu) => (

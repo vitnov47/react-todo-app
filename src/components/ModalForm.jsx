@@ -3,31 +3,34 @@ import { useState, useEffect } from "react";
 import { EditOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 import SelectNote from "./SelectNote";
 import useTasks from "../context/useTasks";
+import moment from "moment";
 
 export default function ModalForm({ onClose, type, editId }) {
   const [form] = Form.useForm();
   const [priority, setPriority] = useState("low");
   const [note, setNote] = useState();
-  const { tasks, addTask } = useTasks();
-  let oldTask = {};
+  const { tasks, addTask, setTasks } = useTasks();
 
   useEffect(() => {
     if (editId) {
-      oldTask = tasks.find((task) => task.id === editId);
+      const oldTask = tasks.find((task) => task.id === editId);
       if (oldTask) {
-        console.log(oldTask);
+        // const startDate = moment(Date(oldTask.startDate));
+        // const endDate = moment(Date(oldTask.endDate));
+
         form.setFieldsValue({
           name: oldTask.name,
           priority: oldTask.priority,
           dates: 0,
-          // dates: [
-          //   moment(oldTask.startDate, "DD-MM-YYYY"),
-          //   moment(oldTask.endDate, "DD-MM-YYYY"),
-          // ],
           note: oldTask.note,
         });
-        setPriority(oldTask.priority);
-        setNote(oldTask.note);
+
+        if (priority != oldTask.priority) {
+          setPriority(oldTask.priority);
+        }
+        if (note != oldTask.note) {
+          setNote(oldTask.note);
+        }
       }
     }
   }, [editId]);
@@ -37,16 +40,25 @@ export default function ModalForm({ onClose, type, editId }) {
   };
 
   const onFinish = (values) => {
+    const newTask = {
+      name: values.name,
+      priority: priority,
+      startDate: values.dates[0].format("DD-MM-YYYY"),
+      endDate: values.dates[1].format("DD-MM-YYYY"),
+      note: note,
+    };
+
     if (type === "create") {
-      const task = {
-        id: crypto.randomUUID(),
-        name: values.name,
-        priority: priority,
-        startDate: values.dates[0].format("DD-MM-YYYY"),
-        endDate: values.dates[1].format("DD-MM-YYYY"),
-        note: note,
-      };
-      addTask(task);
+      newTask.id = crypto.randomUUID();
+      addTask(newTask);
+    } else if (type === "edit") {
+      const updatedTasks = tasks.map((task) => {
+        if (task.id === editId) {
+          return { ...task, ...newTask };
+        }
+        return task;
+      });
+      setTasks(updatedTasks);
     }
     onClose();
   };
@@ -94,11 +106,7 @@ export default function ModalForm({ onClose, type, editId }) {
       </Form.Item>
 
       <Form.Item label="Пометка" name="note">
-        {oldTask ? (
-          <SelectNote setNote={setNote} oldNote={oldTask.note} />
-        ) : (
-          <SelectNote setNote={setNote} />
-        )}
+        <SelectNote setNote={setNote} oldNote={note} />
       </Form.Item>
 
       <Flex justify="flex-end" gap="small">
