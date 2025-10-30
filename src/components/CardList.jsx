@@ -43,15 +43,15 @@ export default function CardList() {
     }
   }, [removalQueue]);
 
-  const stopPropagation = (event) => {
-    event.stopPropagation();
-  };
-
-  const removeTask = (removeId) => {
+  const removeTask = (removeId, event) => {
+    if (event) {
+      event.stopPropagation();
+    }
     setTasks(tasks.filter((task) => task.id != removeId));
   };
 
-  const editTask = (editId) => {
+  const editTask = (editId, event) => {
+    event.stopPropagation();
     setEditId(editId);
     setModalOpen(true);
   };
@@ -68,39 +68,10 @@ export default function CardList() {
         return (
           <Card
             onClick={() => completeTask(task.id)}
-            actions={
-              completedTasks[task.id]
-                ? []
-                : [
-                    <Button
-                      color="purple"
-                      variant="outlined"
-                      onClick={(e) => {
-                        stopPropagation(e);
-                        editTask(task.id);
-                      }}
-                      style={{ width: "80%  " }}
-                    >
-                      <EditOutlined />
-                    </Button>,
-                    <Button
-                      color="danger"
-                      variant="outlined"
-                      onClick={(e) => {
-                        stopPropagation(e);
-                        removeTask(task.id);
-                      }}
-                      style={{
-                        width: "80%",
-                      }}
-                    >
-                      <DeleteOutlined />
-                    </Button>,
-                  ]
-            }
             key={task.id}
             hoverable
             style={{
+              paddingTop: "10px !important",
               border: `${priorityInfo.color} 2px solid`,
             }}
             className={`task-card ${
@@ -120,10 +91,10 @@ export default function CardList() {
                   <Divider type="vertical" style={{ height: "6rem" }} />
                   <Space direction="vertical" style={{ width: "100%" }}>
                     <Typography.Title
-                      level={4}
+                      level={3}
                       style={{
                         textAlign: "center",
-                        marginBottom: 0,
+                        marginBottom: 10,
                       }}
                     >
                       {task.name}
@@ -156,6 +127,22 @@ export default function CardList() {
                 </Flex>
 
                 <div className="completed-text">Выполнено?</div>
+                <Button
+                  color="danger"
+                  variant="outlined"
+                  onClick={(e) => removeTask(task.id, e)}
+                  className="completed-button"
+                >
+                  <DeleteOutlined style={{ fontSize: 16 }} />
+                </Button>
+                <Button
+                  color="purple"
+                  variant="outlined"
+                  onClick={(e) => editTask(task.id, e)}
+                  className="completed-button"
+                >
+                  <EditOutlined style={{ fontSize: 16 }} />
+                </Button>
               </>
             )}
           </Card>
