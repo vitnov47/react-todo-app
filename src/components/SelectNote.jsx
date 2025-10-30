@@ -32,6 +32,7 @@ export default function SelectNote({ setNote, oldNote }) {
 
   return (
     <Select
+      allowClear
       value={oldNote}
       onChange={changeNote}
       placeholder="Пометка"

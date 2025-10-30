@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { EditOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 import SelectNote from "./SelectNote";
 import useTasks from "../context/useTasks";
-import moment from "moment";
+import dayjs from "dayjs";
 
 export default function ModalForm({ onClose, type, editId }) {
   const [form] = Form.useForm();
@@ -15,13 +15,13 @@ export default function ModalForm({ onClose, type, editId }) {
     if (editId) {
       const oldTask = tasks.find((task) => task.id === editId);
       if (oldTask) {
-        // const startDate = moment(Date(oldTask.startDate));
-        // const endDate = moment(Date(oldTask.endDate));
+        const startDate = dayjs(oldTask.startDate);
+        const endDate = dayjs(oldTask.endDate);
 
         form.setFieldsValue({
           name: oldTask.name,
           priority: oldTask.priority,
-          dates: 0,
+          dates: [startDate, endDate],
           note: oldTask.note,
         });
 
@@ -43,8 +43,8 @@ export default function ModalForm({ onClose, type, editId }) {
     const newTask = {
       name: values.name,
       priority: priority,
-      startDate: values.dates[0].format("DD-MM-YYYY"),
-      endDate: values.dates[1].format("DD-MM-YYYY"),
+      startDate: values.dates[0].format("YYYY-MM-DD"),
+      endDate: values.dates[1].format("YYYY-MM-DD"),
       note: note,
     };
 
@@ -70,7 +70,11 @@ export default function ModalForm({ onClose, type, editId }) {
       onFinish={onFinish}
       initialValues={{ priority: "Низкий" }}
     >
-      <Form.Item label="Название задачи" name="name">
+      <Form.Item
+        label="Название задачи"
+        name="name"
+        rules={[{ required: true, message: "Не забудьте назвать задачу" }]}
+      >
         <Input
           prefix={<EditOutlined style={{ marginRight: 7 }} />}
           placeholder="Позвонить родным?"
@@ -78,7 +82,11 @@ export default function ModalForm({ onClose, type, editId }) {
         />
       </Form.Item>
 
-      <Form.Item label="Приоритет" name="priority">
+      <Form.Item
+        label="Приоритет"
+        name="priority"
+        rules={[{ required: true, message: "Выберите приоритет" }]}
+      >
         <Select
           prefix={<ExclamationCircleOutlined style={{ marginRight: 7 }} />}
           placeholder="Приоритет"
@@ -98,7 +106,11 @@ export default function ModalForm({ onClose, type, editId }) {
         />
       </Form.Item>
 
-      <Form.Item label="Сроки выполнения" name="dates">
+      <Form.Item
+        label="Сроки выполнения"
+        name="dates"
+        rules={[{ required: true, message: "Уточните диапазон" }]}
+      >
         <DatePicker.RangePicker
           placeholder={["Старт", "Окончание"]}
           style={{ width: "100%" }}

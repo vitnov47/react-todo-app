@@ -138,18 +138,20 @@ export default function CardList() {
                       <span style={{ fontWeight: 700 }}>Дата:</span>{" "}
                       {task.startDate} - {task.endDate}
                     </Typography.Text>
-                    <Typography.Text>
-                      <span style={{ fontWeight: 900 }}>
-                        <CommentOutlined
-                          style={{
-                            width: "1rem",
-                            height: "1rem",
-                          }}
-                        />
-                        :
-                      </span>{" "}
-                      <span style={{ marginLeft: 1 }}>{task.note}</span>
-                    </Typography.Text>
+                    {task.note && (
+                      <Typography.Text>
+                        <span style={{ fontWeight: 900 }}>
+                          <CommentOutlined
+                            style={{
+                              width: "1rem",
+                              height: "1rem",
+                            }}
+                          />
+                          :
+                        </span>{" "}
+                        <span style={{ marginLeft: 1 }}>{task.note}</span>
+                      </Typography.Text>
+                    )}
                   </Space>
                 </Flex>
 
