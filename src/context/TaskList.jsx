@@ -11,7 +11,7 @@ export const TaskList = [
     id: crypto.randomUUID(),
     name: "Изучение React",
     priority: "high",
-    startDate: "2025-23-10",
+    startDate: "2025-10-23",
     endDate: "2025-12-25",
     note: "Учеба",
   },

@@ -10,6 +10,10 @@ export default function TaskListProvider({ children }) {
     setTasks([...tasks, task]);
   }
 
+  function removeTask(removeId) {
+    setTasks(tasks.filter((task) => task.id != removeId));
+  }
+
   useEffect(() => {
     TaskList.map((task) => {
       const { priorityName } = definePriority(task.priority);
@@ -19,7 +23,7 @@ export default function TaskListProvider({ children }) {
   }, []);
 
   return (
-    <TaskContext.Provider value={{ tasks, setTasks, addTask }}>
+    <TaskContext.Provider value={{ tasks, setTasks, addTask, removeTask }}>
       {children}
     </TaskContext.Provider>
   );

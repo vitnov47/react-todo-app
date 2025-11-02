@@ -37,6 +37,7 @@ export default function ModalForm({ onClose, type, editId }) {
 
   const onReset = () => {
     form.resetFields();
+    setPriority("low");
   };
 
   const onFinish = (values) => {
