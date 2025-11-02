@@ -2,10 +2,12 @@ import { Space, Modal, Card } from "antd";
 import useTasks from "../context/useTasks";
 import { useState } from "react";
 import ModalEdit from "./ModalEdit";
-import TaskCard from "./TaskCard";
+import ActiveCard from "./ActiveCard";
+import FinishedCard from "./FinishedCard";
+import DeletedCard from "./DeletedCard";
 
 export default function CardList() {
-  const { tasks, removeTask } = useTasks();
+  const { tasks, setTasks } = useTasks();
   const [modalOpen, setModalOpen] = useState(false);
   const [editId, setEditId] = useState();
   const [activeTabKey, setActiveTabKey] = useState("active");
@@ -32,18 +34,20 @@ export default function CardList() {
   const tabsContent = {
     active: (
       <Space direction="vertical" style={{ width: "100%" }} size="middle">
-        {tasks.map((task) => {
-          return (
-            <TaskCard
-              key={task.id}
-              tasks={tasks}
-              removeTask={removeTask}
-              task={task}
-              setModalOpen={setModalOpen}
-              setEditId={setEditId}
-            />
-          );
-        })}
+        {tasks
+          .filter((task) => task.status === "active")
+          .map((task) => {
+            return (
+              <ActiveCard
+                key={task.id}
+                tasks={tasks}
+                setTasks={setTasks}
+                task={task}
+                setModalOpen={setModalOpen}
+                setEditId={setEditId}
+              />
+            );
+          })}
         <Modal
           closable={{ "aria-label": "Custom Close Button" }}
           open={modalOpen}
@@ -54,8 +58,31 @@ export default function CardList() {
         </Modal>
       </Space>
     ),
-    finished: <p>Finished Tasks</p>,
-    deleted: <p>Deleted Tasks</p>,
+    finished: (
+      <Space direction="vertical" style={{ width: "100%" }} size="middle">
+        {tasks
+          .filter((task) => task.status === "finished")
+          .map((task) => {
+            return <FinishedCard key={task.id} task={task} />;
+          })}
+      </Space>
+    ),
+    deleted: (
+      <Space direction="vertical" style={{ width: "100%" }} size="middle">
+        {tasks
+          .filter((task) => task.status === "deleted")
+          .map((task) => {
+            return (
+              <DeletedCard
+                key={task.id}
+                task={task}
+                tasks={tasks}
+                setTasks={setTasks}
+              />
+            );
+          })}
+      </Space>
+    ),
   };
 
   return (

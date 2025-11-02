@@ -9,35 +9,28 @@ import "../styles/cardStyle.css";
 import { definePriority } from "../utils";
 import { useState, useEffect } from "react";
 
-export default function TaskCard({
-  removeTask,
+export default function ActiveCard({
+  tasks,
+  setTasks,
   task,
   setModalOpen,
   setEditId,
 }) {
   const [completedTasks, setCompletedTasks] = useState({});
-  const [removalQueue, setRemovalQueue] = useState([]);
   const priorityInfo = definePriority(task.priority);
 
-  useEffect(() => {
-    if (removalQueue.length > 0) {
-      const taskId = [removalQueue[0]];
-      const removeWithDelay = () => {
-        setTimeout(() => {
-          deleteTask(taskId);
-        }, 1000);
-      };
-
-      removeWithDelay();
-      setRemovalQueue((prev) => prev.slice(1));
-    }
-  }, [removalQueue]);
-
-  const deleteTask = (removeId, event) => {
+  const deleteTask = (deleteId, event) => {
     if (event) {
       event.stopPropagation();
     }
-    removeTask(removeId);
+    setTasks(
+      tasks.map((task) => {
+        if (task.id === deleteId) {
+          return { ...task, status: "deleted" };
+        }
+        return task;
+      })
+    );
   };
 
   const editTask = (editId, event) => {
@@ -48,7 +41,16 @@ export default function TaskCard({
 
   const completeTask = (completeId) => {
     setCompletedTasks((prev) => ({ ...prev, [completeId]: true }));
-    setRemovalQueue((prev) => [...prev, completeId]);
+    setTimeout(() => {
+      setTasks(
+        tasks.map((task) => {
+          if (task.id === completeId) {
+            return { ...task, status: "finished" };
+          }
+          return task;
+        })
+      );
+    }, 1000);
   };
 
   return (
@@ -57,7 +59,6 @@ export default function TaskCard({
       key={task.id}
       hoverable
       style={{
-        paddingTop: "10px !important",
         border: `${priorityInfo.color} 2px solid`,
       }}
       className={`task-card ${completedTasks[task.id] ? "completed" : ""}`}
@@ -109,7 +110,6 @@ export default function TaskCard({
               )}
             </Space>
           </Flex>
-
           <div className="completed-text">Выполнено?</div>
           <Button
             color="danger"

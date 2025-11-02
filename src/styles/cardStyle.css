@@ -44,3 +44,35 @@
   cursor: auto;
   transform: scale(1);
 }
+
+.finished-card {
+  background-color: #cccccc;
+  border: darkgray 2px solid;
+}
+
+.deleted-card {
+  transition: transform 0.2s ease, background-color 0.3s ease;
+  border: red 2px dashed;
+  background-color: rgba(238, 160, 160, 0.842);
+  position: relative;
+}
+
+.deleted-card:hover {
+  transform: scale(1.07);
+  border: rgb(58, 103, 252) 2px dashed;
+  background-color: rgb(58, 103, 252);
+}
+
+.deleted-card .return-text {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 1.8rem;
+}
+
+.deleted-card:hover .return-text {
+  display: block;
+}

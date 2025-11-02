@@ -6,6 +6,7 @@ export const TaskList = [
     startDate: "2025-10-21",
     endDate: "2025-04-11",
     note: "Семья",
+    status: "active",
   },
   {
     id: crypto.randomUUID(),
@@ -14,6 +15,7 @@ export const TaskList = [
     startDate: "2025-10-23",
     endDate: "2025-12-25",
     note: "Учеба",
+    status: "active",
   },
   {
     id: crypto.randomUUID(),
@@ -22,6 +24,7 @@ export const TaskList = [
     startDate: "2025-07-01",
     endDate: "2026-01-01",
     note: "Спорт",
+    status: "active",
   },
   {
     id: crypto.randomUUID(),
@@ -30,5 +33,6 @@ export const TaskList = [
     startDate: "2025-10-22",
     endDate: "2025-10-23",
     note: "Дом",
+    status: "finished",
   },
 ];

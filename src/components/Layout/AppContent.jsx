@@ -6,7 +6,7 @@ export default function AppContent() {
     textAlign: "left",
     paddingInline: "3rem",
     paddingBlock: "1rem",
-    backgroundColor: "#3E19B5",
+    backgroundColor: "#5b2febff",
     minHeight: "92vh",
   };
 
