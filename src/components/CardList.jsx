@@ -1,11 +1,11 @@
-import { Space, Modal, Card } from "antd";
+import { Space, Modal, Card, Typography } from "antd";
 import { useState } from "react";
 import useTasks from "../context/useTasks";
 import ModalEdit from "./ModalEdit";
 import ActiveCard from "./ActiveCard";
 import FinishedCard from "./FinishedCard";
 import DeletedCard from "./DeletedCard";
-import { definePriority } from "../utils";
+import { definePriority, Quote } from "../utils";
 
 export default function CardList() {
   const { tasks, setTasks } = useTasks();
@@ -33,57 +33,69 @@ export default function CardList() {
   };
 
   const tabsContent = {
-    active: (
-      <Space direction="vertical" style={{ width: "100%" }} size="middle">
-        {tasks
-          .filter((task) => task.status === "active")
-          .map((task) => {
-            return (
-              <ActiveCard
-                key={task.id}
-                tasks={tasks}
-                setTasks={setTasks}
-                task={definePriority(task)}
-                setModalOpen={setModalOpen}
-                setEditId={setEditId}
-              />
-            );
-          })}
-        <Modal
-          closable={{ "aria-label": "Custom Close Button" }}
-          open={modalOpen}
-          onCancel={() => setModalOpen(false)}
-          footer={null}
-        >
-          <ModalEdit onClose={() => setModalOpen(false)} editId={editId} />
-        </Modal>
-      </Space>
-    ),
-    finished: (
-      <Space direction="vertical" style={{ width: "100%" }} size="middle">
-        {tasks
-          .filter((task) => task.status === "finished")
-          .map((task) => {
-            return <FinishedCard key={task.id} task={definePriority(task)} />;
-          })}
-      </Space>
-    ),
-    deleted: (
-      <Space direction="vertical" style={{ width: "100%" }} size="middle">
-        {tasks
-          .filter((task) => task.status === "deleted")
-          .map((task) => {
-            return (
-              <DeletedCard
-                key={task.id}
-                task={definePriority(task)}
-                tasks={tasks}
-                setTasks={setTasks}
-              />
-            );
-          })}
-      </Space>
-    ),
+    active:
+      tasks.filter((task) => task.status === "active").length > 0 ? (
+        <Space direction="vertical" style={{ width: "100%" }} size="middle">
+          {tasks
+            .filter((task) => task.status === "active")
+            .map((task) => {
+              return (
+                <ActiveCard
+                  key={task.id}
+                  tasks={tasks}
+                  setTasks={setTasks}
+                  task={definePriority(task)}
+                  setModalOpen={setModalOpen}
+                  setEditId={setEditId}
+                />
+              );
+            })}
+          <Modal
+            closable={{ "aria-label": "Custom Close Button" }}
+            open={modalOpen}
+            onCancel={() => setModalOpen(false)}
+            footer={null}
+          >
+            <ModalEdit onClose={() => setModalOpen(false)} editId={editId} />
+          </Modal>
+        </Space>
+      ) : (
+        <Space direction="vertical">
+          <Typography.Text>Все задания выполнены</Typography.Text>
+          <Typography.Text>Начнем что-то новое?</Typography.Text>
+        </Space>
+      ),
+    finished:
+      tasks.filter((task) => task.status === "finished").length > 0 ? (
+        <Space direction="vertical" style={{ width: "100%" }} size="middle">
+          {tasks
+            .filter((task) => task.status === "finished")
+            .map((task) => {
+              return <FinishedCard key={task.id} task={definePriority(task)} />;
+            })}
+        </Space>
+      ) : (
+        <Quote />
+      ),
+    deleted:
+      tasks.filter((task) => task.status === "deleted").length > 0 ? (
+        <Space direction="vertical" style={{ width: "100%" }} size="middle">
+          {tasks
+            .filter((task) => task.status === "deleted")
+            .map((task) => {
+              return (
+                <DeletedCard
+                  key={task.id}
+                  task={definePriority(task)}
+                  tasks={tasks}
+                  setTasks={setTasks}
+                />
+              );
+            })}
+        </Space>
+      ) : (
+        <Typography>Не припомню, чтобы вы что-то удаляли</Typography>
+      ),
   };
 
   return (

@@ -33,6 +33,6 @@ export const TaskList = [
     startDate: "2025-10-22",
     endDate: "2025-10-23",
     note: "Дом",
-    status: "finished",
+    status: "active",
   },
 ];
