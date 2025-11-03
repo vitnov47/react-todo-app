@@ -122,6 +122,8 @@ export function Quote() {
         К чему в этой жизни можно применить слово «поздно»? Ни к чему. Пока ты
         сам так не будешь думать."
       </Typography.Paragraph>
+
+      <Typography.Paragraph italic>© Галина Созанчук</Typography.Paragraph>
     </>
   );
 }
