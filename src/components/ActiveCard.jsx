@@ -5,9 +5,7 @@ import {
   EditOutlined,
 } from "@ant-design/icons";
 import "../styles/cardStyle.css";
-
-import { definePriority } from "../utils";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function ActiveCard({
   tasks,
@@ -17,7 +15,6 @@ export default function ActiveCard({
   setEditId,
 }) {
   const [completedTasks, setCompletedTasks] = useState({});
-  const priorityInfo = definePriority(task.priority);
 
   const deleteTask = (deleteId, event) => {
     if (event) {
@@ -59,7 +56,7 @@ export default function ActiveCard({
       key={task.id}
       hoverable
       style={{
-        border: `${priorityInfo.color} 2px solid`,
+        border: `${task.color} 2px solid`,
       }}
       className={`task-card ${completedTasks[task.id] ? "completed" : ""}`}
     >
@@ -72,7 +69,7 @@ export default function ActiveCard({
       ) : (
         <>
           <Flex align="center">
-            {priorityInfo.icon}
+            {task.icon}
             <Divider type="vertical" style={{ height: "6rem" }} />
             <Space direction="vertical" style={{ width: "100%" }}>
               <Typography.Title
@@ -86,9 +83,7 @@ export default function ActiveCard({
               </Typography.Title>
               <Typography.Text>
                 <span style={{ fontWeight: 700 }}>Приоритет:</span>{" "}
-                <span style={{ color: priorityInfo.color }}>
-                  {priorityInfo.priorityName}
-                </span>
+                <span style={{ color: task.color }}>{task.priorityName}</span>
               </Typography.Text>
               <Typography.Text>
                 <span style={{ fontWeight: 700 }}>Дата:</span> {task.startDate}{" "}

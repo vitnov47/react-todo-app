@@ -7,7 +7,7 @@
 .task-card:hover {
   transform: scale(1.07);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-  background-color: #23ce10;
+  background-color: #21bf0f;
 }
 
 .task-card .completed-text {
@@ -59,7 +59,7 @@
 
 .deleted-card:hover {
   transform: scale(1.07);
-  border: rgb(58, 103, 252) 2px dashed;
+  border: rgb(245, 3, 3) 2px solid;
   background-color: rgb(58, 103, 252);
 }
 

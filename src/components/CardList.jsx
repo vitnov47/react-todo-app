@@ -1,10 +1,11 @@
 import { Space, Modal, Card } from "antd";
-import useTasks from "../context/useTasks";
 import { useState } from "react";
+import useTasks from "../context/useTasks";
 import ModalEdit from "./ModalEdit";
 import ActiveCard from "./ActiveCard";
 import FinishedCard from "./FinishedCard";
 import DeletedCard from "./DeletedCard";
+import { definePriority } from "../utils";
 
 export default function CardList() {
   const { tasks, setTasks } = useTasks();
@@ -42,7 +43,7 @@ export default function CardList() {
                 key={task.id}
                 tasks={tasks}
                 setTasks={setTasks}
-                task={task}
+                task={definePriority(task)}
                 setModalOpen={setModalOpen}
                 setEditId={setEditId}
               />
@@ -63,7 +64,7 @@ export default function CardList() {
         {tasks
           .filter((task) => task.status === "finished")
           .map((task) => {
-            return <FinishedCard key={task.id} task={task} />;
+            return <FinishedCard key={task.id} task={definePriority(task)} />;
           })}
       </Space>
     ),
@@ -75,7 +76,7 @@ export default function CardList() {
             return (
               <DeletedCard
                 key={task.id}
-                task={task}
+                task={definePriority(task)}
                 tasks={tasks}
                 setTasks={setTasks}
               />

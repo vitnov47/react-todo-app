@@ -47,6 +47,7 @@ export default function ModalForm({ onClose, type, editId }) {
       startDate: values.dates[0].format("YYYY-MM-DD"),
       endDate: values.dates[1].format("YYYY-MM-DD"),
       note: note,
+      status: "active",
     };
 
     if (type === "create") {

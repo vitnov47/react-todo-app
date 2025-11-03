@@ -6,11 +6,11 @@ import {
   faDiceFour,
 } from "@fortawesome/free-solid-svg-icons";
 
-export function definePriority(priority) {
+export function definePriority(task) {
   let icon = 0;
   let color = "#0300FF";
   let priorityName = "Ошибочка вышла..";
-  switch (priority) {
+  switch (task.priority) {
     case "low":
       icon = (
         <FontAwesomeIcon
@@ -52,5 +52,5 @@ export function definePriority(priority) {
       priorityName = "Ну капец какой";
       break;
   }
-  return { icon, color, priorityName };
+  return { ...task, icon, color, priorityName };
 }

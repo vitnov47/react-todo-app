@@ -1,11 +1,8 @@
 import { Card, Space, Typography, Flex, Divider } from "antd";
 import { CommentOutlined } from "@ant-design/icons";
 import "../styles/cardStyle.css";
-import { definePriority } from "../utils";
 
 export default function DeletedCard({ task, tasks, setTasks }) {
-  const priorityInfo = definePriority(task.priority);
-
   const returnTask = (returnId) => {
     setTasks(
       tasks.map((task) => {
@@ -25,7 +22,7 @@ export default function DeletedCard({ task, tasks, setTasks }) {
       hoverable
     >
       <Flex align="center">
-        {priorityInfo.icon}
+        {task.icon}
         <Divider type="vertical" style={{ height: "6rem" }} />
         <Space direction="vertical" style={{ width: "100%" }}>
           <Typography.Title
@@ -39,7 +36,7 @@ export default function DeletedCard({ task, tasks, setTasks }) {
           </Typography.Title>
           <Typography.Text>
             <span style={{ fontWeight: 700 }}>Приоритет:</span>{" "}
-            <span>{priorityInfo.priorityName}</span>
+            <span>{task.priorityName}</span>
           </Typography.Text>
           <Typography.Text>
             <span style={{ fontWeight: 700 }}>Дата:</span> {task.startDate} -{" "}
