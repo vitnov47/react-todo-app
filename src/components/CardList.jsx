@@ -48,10 +48,8 @@ export default function CardList() {
           />
           {tasks
             .filter((task) => task.status === "active")
-            .filter(
-              (task) =>
-                task.name.slice(0, search.length).toLowerCase() ===
-                search.toLowerCase()
+            .filter((task) =>
+              task.name.toLowerCase().includes(search.toLowerCase())
             )
             .map((task) => {
               return (
