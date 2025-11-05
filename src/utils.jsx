@@ -1,10 +1,9 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Typography } from "antd";
 
 import easyTaskImg from "./img/easyTask.svg";
 import middleTaskImg from "./img/middleTask.svg";
 import hardTaskImg from "./img/hardTask.svg";
-import unbeliavableTaskImg from "./img/unbeliavableTask.svg";
+import unbeliavableTaskImg from "./img/unbelievableTask.svg";
 
 export function definePriority(task) {
   let icon = 0;

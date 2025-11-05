@@ -8,6 +8,7 @@ import {
   Result,
   Modal,
   Input,
+  Select,
 } from "antd";
 import {
   CommentOutlined,
@@ -26,9 +27,21 @@ export default function ActiveCards() {
   const [modalOpen, setModalOpen] = useState(false);
   const [editId, setEditId] = useState();
   const [search, setSearch] = useState("");
+  const [filters, setFilters] = useState([]);
 
-  const onChange = (value) => {
+  const options = [
+    { label: "Низкий", value: "low" },
+    { label: "Средний", value: "middle" },
+    { label: "Высокий", value: "high" },
+    { label: "Ну капец какой", value: "unbelievable" },
+  ];
+
+  const changeSearch = (value) => {
     setSearch(value.currentTarget.value);
+  };
+
+  const changeFilter = (values) => {
+    setFilters(values);
   };
 
   const deleteTask = (deleteId, event) => {
@@ -67,17 +80,21 @@ export default function ActiveCards() {
 
   return tasks.filter((task) => task.status === "active").length > 0 ? (
     <Space direction="vertical" style={{ width: "100%" }} size="middle">
-      <Input
-        size="large"
-        placeholder="Поиск"
+      <Input placeholder="Поиск" allowClear onChange={changeSearch} />
+      <Select
+        placeholder="Приоритет"
+        style={{ width: "100%" }}
+        onChange={changeFilter}
+        mode="multiple"
         allowClear
-        onChange={(value) => onChange(value)}
+        options={options}
       />
       {tasks
         .filter(
           (task) =>
             task.status === "active" &&
-            task.name.toLowerCase().includes(search.toLowerCase())
+            task.name.toLowerCase().includes(search.toLowerCase()) &&
+            (filters.length === 0 || filters.includes(task.priority))
         )
         .map((preTask) => {
           const task = definePriority(preTask);
