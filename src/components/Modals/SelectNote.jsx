@@ -1,6 +1,6 @@
 import { Select, Divider, Space, Input, Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 
 export default function SelectNote({ setNote, oldNote }) {
   const [items, setItems] = useState([

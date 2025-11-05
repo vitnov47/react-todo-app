@@ -6,7 +6,7 @@ import {
 } from "@ant-design/icons";
 import { useState } from "react";
 import "../../styles/headerButton.css";
-import ModalForm from "../ModalForm";
+import ModalForm from "../Modals/ModalForm";
 
 export default function AppHeader() {
   const [modalOpen, setModalOpen] = useState(false);

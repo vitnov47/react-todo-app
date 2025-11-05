@@ -1,11 +1,11 @@
 import { Space, Modal, Card, Typography, Input } from "antd";
 import { useState } from "react";
-import useTasks from "../context/useTasks";
-import ModalEdit from "./ModalEdit";
+import useTasks from "../../context/useTasks";
+import ModalEdit from "../Modals/ModalEdit";
 import ActiveCard from "./ActiveCard";
 import FinishedCard from "./FinishedCard";
 import DeletedCard from "./DeletedCard";
-import { definePriority, Quote } from "../utils";
+import { definePriority, Quote } from "../../utils";
 
 export default function CardList() {
   const { tasks, setTasks } = useTasks();

@@ -1,26 +1,10 @@
 import { Card, Space, Typography, Flex, Divider } from "antd";
 import { CommentOutlined } from "@ant-design/icons";
-import "../styles/cardStyle.css";
+import "../../styles/cardStyle.css";
 
-export default function DeletedCard({ task, tasks, setTasks }) {
-  const returnTask = (returnId) => {
-    setTasks(
-      tasks.map((task) => {
-        if (task.id === returnId) {
-          return { ...task, status: "active" };
-        }
-        return task;
-      })
-    );
-  };
-
+export default function FinishedCard({ task }) {
   return (
-    <Card
-      key={task.id}
-      onClick={() => returnTask(task.id)}
-      className={"deleted-card"}
-      hoverable
-    >
+    <Card key={task.id} className={"finished-card"}>
       <Flex align="center">
         {task.icon}
         <Divider type="vertical" style={{ height: "6rem" }} />
@@ -58,7 +42,6 @@ export default function DeletedCard({ task, tasks, setTasks }) {
           )}
         </Space>
       </Flex>
-      <div className="return-text">Вернуть?</div>
     </Card>
   );
 }

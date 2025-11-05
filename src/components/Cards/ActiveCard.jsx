@@ -4,7 +4,7 @@ import {
   DeleteOutlined,
   EditOutlined,
 } from "@ant-design/icons";
-import "../styles/cardStyle.css";
+import "../../styles/cardStyle.css";
 import { useState } from "react";
 
 export default function ActiveCard({

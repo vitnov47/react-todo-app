@@ -1,5 +1,5 @@
 import { Layout } from "antd";
-import CardList from "../CardList";
+import CardList from "../Cards/CardList";
 
 export default function AppContent() {
   const contentStyle = {
