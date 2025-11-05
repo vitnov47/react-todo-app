@@ -59,6 +59,9 @@ export function Quote() {
   return (
     <>
       <Typography.Paragraph>Еще не успели ничего сделать?</Typography.Paragraph>
+      <Typography.Paragraph>
+        Не поздно начать. Никогда не поздно. Вот послушайте.
+      </Typography.Paragraph>
       <Typography.Paragraph italic>
         "Удивительная штука — жизнь.
       </Typography.Paragraph>

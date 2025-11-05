@@ -1,4 +1,4 @@
-import { Space, Modal, Card, Typography } from "antd";
+import { Space, Modal, Card, Typography, Input } from "antd";
 import { useState } from "react";
 import useTasks from "../context/useTasks";
 import ModalEdit from "./ModalEdit";
@@ -12,6 +12,7 @@ export default function CardList() {
   const [modalOpen, setModalOpen] = useState(false);
   const [editId, setEditId] = useState();
   const [activeTabKey, setActiveTabKey] = useState("active");
+  const [search, setSearch] = useState("");
 
   const tabListNoTitle = [
     {
@@ -32,12 +33,26 @@ export default function CardList() {
     setActiveTabKey(key);
   };
 
+  const onChange = (value) => {
+    setSearch(value.currentTarget.value);
+  };
+
   const tabsContent = {
     active:
       tasks.filter((task) => task.status === "active").length > 0 ? (
         <Space direction="vertical" style={{ width: "100%" }} size="middle">
+          <Input
+            placeholder="Поиск"
+            allowClear
+            onChange={(value) => onChange(value)}
+          />
           {tasks
             .filter((task) => task.status === "active")
+            .filter(
+              (task) =>
+                task.name.slice(0, search.length).toLowerCase() ===
+                search.toLowerCase()
+            )
             .map((task) => {
               return (
                 <ActiveCard
@@ -61,7 +76,7 @@ export default function CardList() {
         </Space>
       ) : (
         <Space direction="vertical">
-          <Typography.Text>Все задания выполнены</Typography.Text>
+          <Typography.Text>Все задания выполнены.</Typography.Text>
           <Typography.Text>Начнем что-то новое?</Typography.Text>
         </Space>
       ),
@@ -94,7 +109,7 @@ export default function CardList() {
             })}
         </Space>
       ) : (
-        <Typography>Не припомню, чтобы вы что-то удаляли</Typography>
+        <Typography>Не припомню, чтобы вы что-то удаляли.</Typography>
       ),
   };
 

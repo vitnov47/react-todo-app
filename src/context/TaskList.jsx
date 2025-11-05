@@ -35,4 +35,13 @@ export const TaskList = [
     note: "Дом",
     status: "active",
   },
+  {
+    id: crypto.randomUUID(),
+    name: "Изменение жизни",
+    priority: "middle",
+    startDate: "2025-10-23",
+    endDate: "2025-12-25",
+    note: "Учеба",
+    status: "active",
+  },
 ];
