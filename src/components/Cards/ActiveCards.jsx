@@ -24,6 +24,7 @@ import {
 import "../../styles/cardStyle.css";
 import ModalEdit from "../Modals/ModalEdit";
 import useTasks from "../../context/useTasks";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 
 export default function ActiveCards() {
@@ -133,95 +134,106 @@ export default function ActiveCards() {
           </Button>
         </Tooltip>
       </Flex>
-      {tasks
-        .filter(
-          (task) =>
-            task.status === "active" &&
-            task.name.toLowerCase().includes(search.toLowerCase()) &&
-            (filters.length === 0 || filters.includes(task.priority))
-        )
-        .map((task) => {
-          return (
-            <Card
-              onClick={() => completeTask(task.id)}
-              key={task.id}
-              hoverable
-              style={{
-                border: `${task.color} 2px solid`,
-              }}
-              className={`task-card ${
-                completedTasks[task.id] ? "completed" : ""
-              }`}
-            >
-              {completedTasks[task.id] ? (
-                <Result
-                  status="success"
-                  title="Выполнено"
-                  subTitle="Продолжайте в том же духе"
-                />
-              ) : (
-                <>
-                  <Flex align="center">
-                    {task.icon}
-                    <Divider type="vertical" style={{ height: "6rem" }} />
-                    <Space direction="vertical" style={{ width: "100%" }}>
-                      <Typography.Title
-                        level={3}
-                        style={{
-                          textAlign: "center",
-                          marginBottom: 10,
-                        }}
+      <AnimatePresence>
+        {tasks
+          .filter(
+            (task) =>
+              task.status === "active" &&
+              task.name.toLowerCase().includes(search.toLowerCase()) &&
+              (filters.length === 0 || filters.includes(task.priority))
+          )
+          .map((task) => {
+            return (
+              <motion.div
+                key={task.id}
+                layout
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -50, scale: 0.9 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Card
+                  onClick={() => completeTask(task.id)}
+                  key={task.id}
+                  hoverable
+                  style={{
+                    border: `${task.color} 2px solid`,
+                  }}
+                  className={`task-card ${
+                    completedTasks[task.id] ? "completed" : ""
+                  }`}
+                >
+                  {completedTasks[task.id] ? (
+                    <Result
+                      status="success"
+                      title="Выполнено"
+                      subTitle="Продолжайте в том же духе"
+                    />
+                  ) : (
+                    <>
+                      <Flex align="center">
+                        {task.icon}
+                        <Divider type="vertical" style={{ height: "6rem" }} />
+                        <Space direction="vertical" style={{ width: "100%" }}>
+                          <Typography.Title
+                            level={3}
+                            style={{
+                              textAlign: "center",
+                              marginBottom: 10,
+                            }}
+                          >
+                            {task.name}
+                          </Typography.Title>
+                          <Typography.Text>
+                            <span style={{ fontWeight: 700 }}>Приоритет:</span>{" "}
+                            <span style={{ color: task.color }}>
+                              {task.priorityName}
+                            </span>
+                          </Typography.Text>
+                          <Typography.Text>
+                            <span style={{ fontWeight: 700 }}>Дата:</span>{" "}
+                            {task.startDate} - {task.endDate}
+                          </Typography.Text>
+                          {task.note && (
+                            <Typography.Text>
+                              <span style={{ fontWeight: 900 }}>
+                                <CommentOutlined
+                                  style={{
+                                    width: "1rem",
+                                    height: "1rem",
+                                  }}
+                                />
+                                :
+                              </span>{" "}
+                              <span style={{ marginLeft: 1 }}>{task.note}</span>
+                            </Typography.Text>
+                          )}
+                        </Space>
+                      </Flex>
+                      <div className="completed-text">Выполнено?</div>
+                      <Button
+                        color="danger"
+                        variant="outlined"
+                        onClick={(e) => deleteTask(task.id, e)}
+                        className="completed-button"
                       >
-                        {task.name}
-                      </Typography.Title>
-                      <Typography.Text>
-                        <span style={{ fontWeight: 700 }}>Приоритет:</span>{" "}
-                        <span style={{ color: task.color }}>
-                          {task.priorityName}
-                        </span>
-                      </Typography.Text>
-                      <Typography.Text>
-                        <span style={{ fontWeight: 700 }}>Дата:</span>{" "}
-                        {task.startDate} - {task.endDate}
-                      </Typography.Text>
-                      {task.note && (
-                        <Typography.Text>
-                          <span style={{ fontWeight: 900 }}>
-                            <CommentOutlined
-                              style={{
-                                width: "1rem",
-                                height: "1rem",
-                              }}
-                            />
-                            :
-                          </span>{" "}
-                          <span style={{ marginLeft: 1 }}>{task.note}</span>
-                        </Typography.Text>
-                      )}
-                    </Space>
-                  </Flex>
-                  <div className="completed-text">Выполнено?</div>
-                  <Button
-                    color="danger"
-                    variant="outlined"
-                    onClick={(e) => deleteTask(task.id, e)}
-                    className="completed-button"
-                  >
-                    <DeleteOutlined style={{ fontSize: 16 }} />
-                  </Button>
-                  <Button
-                    color="purple"
-                    variant="outlined"
-                    onClick={(e) => editTask(task.id, e)}
-                    className="completed-button"
-                  >
-                    <EditOutlined style={{ fontSize: 16 }} />
-                  </Button>
-                </>
-              )}
-            </Card>
-          );
-        })}
+                        <DeleteOutlined style={{ fontSize: 16 }} />
+                      </Button>
+                      <Button
+                        color="purple"
+                        variant="outlined"
+                        onClick={(e) => editTask(task.id, e)}
+                        className="completed-button"
+                      >
+                        <EditOutlined style={{ fontSize: 16 }} />
+                      </Button>
+                    </>
+                  )}
+                </Card>
+              </motion.div>
+            );
+          })}
+      </AnimatePresence>
       <Modal
         closable={{ "aria-label": "Custom Close Button" }}
         open={modalOpen}
