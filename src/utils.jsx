@@ -9,6 +9,7 @@ export function definePriority(task) {
   let icon = 0;
   let color = "#0300FF";
   let priorityName = "Ошибочка вышла..";
+  let priorityOrder = 1;
   switch (task.priority) {
     case "low":
       icon = (
@@ -29,6 +30,7 @@ export function definePriority(task) {
       );
       color = "#E6E62E";
       priorityName = "Средний";
+      priorityOrder = 2;
       break;
     case "high":
       icon = (
@@ -39,6 +41,7 @@ export function definePriority(task) {
       );
       color = "#F2AE00";
       priorityName = "Высокий";
+      priorityOrder = 3;
       break;
     case "unbelievable":
       icon = (
@@ -49,9 +52,10 @@ export function definePriority(task) {
       );
       color = "#F72D1E";
       priorityName = "Ну капец какой";
+      priorityOrder = 4;
       break;
   }
-  return { ...task, icon, color, priorityName };
+  return { ...task, icon, color, priorityName, priorityOrder };
 }
 
 export function Quote() {

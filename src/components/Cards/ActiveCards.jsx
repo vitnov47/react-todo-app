@@ -14,11 +14,15 @@ import {
   CommentOutlined,
   DeleteOutlined,
   EditOutlined,
+  CaretUpFilled,
+  CaretDownFilled,
+  CloseCircleFilled,
+  FilterOutlined,
+  SearchOutlined,
 } from "@ant-design/icons";
 import "../../styles/cardStyle.css";
 import ModalEdit from "../Modals/ModalEdit";
 import useTasks from "../../context/useTasks";
-import { definePriority } from "../../utils";
 import { useState } from "react";
 
 export default function ActiveCards() {
@@ -28,6 +32,8 @@ export default function ActiveCards() {
   const [editId, setEditId] = useState();
   const [search, setSearch] = useState("");
   const [filters, setFilters] = useState([]);
+  const [sorting, setSorting] = useState(0);
+  const [oldSort, setOldSort] = useState([]);
 
   const options = [
     { label: "Низкий", value: "low" },
@@ -42,6 +48,28 @@ export default function ActiveCards() {
 
   const changeFilter = (values) => {
     setFilters(values);
+  };
+
+  const changeSorting = () => {
+    if (sorting === 0) {
+      setOldSort([...tasks]);
+      const notActiveTasks = tasks.filter((task) => task.status != "active");
+      const sortedTasks = tasks
+        .filter((task) => task.status === "active")
+        .sort((a, b) => a.priorityOrder - b.priorityOrder);
+      setTasks([...sortedTasks, ...notActiveTasks]);
+      setSorting(1);
+    } else if (sorting === 1) {
+      const notActiveTasks = tasks.filter((task) => task.status != "active");
+      const sortedTasks = tasks
+        .filter((task) => task.status === "active")
+        .sort((a, b) => b.priorityOrder - a.priorityOrder);
+      setTasks([...sortedTasks, ...notActiveTasks]);
+      setSorting(2);
+    } else {
+      setTasks(oldSort);
+      setSorting(0);
+    }
   };
 
   const deleteTask = (deleteId, event) => {
@@ -80,15 +108,28 @@ export default function ActiveCards() {
 
   return tasks.filter((task) => task.status === "active").length > 0 ? (
     <Space direction="vertical" style={{ width: "100%" }} size="middle">
-      <Input placeholder="Поиск" allowClear onChange={changeSearch} />
-      <Select
-        placeholder="Приоритет"
-        style={{ width: "100%" }}
-        onChange={changeFilter}
-        mode="multiple"
+      <Input
+        prefix={<SearchOutlined />}
+        placeholder="Поиск"
         allowClear
-        options={options}
+        onChange={changeSearch}
       />
+      <Flex gap="small">
+        <Select
+          placeholder="Приоритет"
+          style={{ width: "100%" }}
+          onChange={changeFilter}
+          mode="multiple"
+          allowClear
+          options={options}
+          prefix={<FilterOutlined />}
+        />
+        <Button onClick={changeSorting}>
+          {sorting === 0 && <CaretUpFilled />}
+          {sorting === 1 && <CaretDownFilled />}
+          {sorting === 2 && <CloseCircleFilled />}
+        </Button>
+      </Flex>
       {tasks
         .filter(
           (task) =>
@@ -96,8 +137,7 @@ export default function ActiveCards() {
             task.name.toLowerCase().includes(search.toLowerCase()) &&
             (filters.length === 0 || filters.includes(task.priority))
         )
-        .map((preTask) => {
-          const task = definePriority(preTask);
+        .map((task) => {
           return (
             <Card
               onClick={() => completeTask(task.id)}

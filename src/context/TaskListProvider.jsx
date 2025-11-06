@@ -15,11 +15,11 @@ export default function TaskListProvider({ children }) {
   }
 
   useEffect(() => {
-    TaskList.map((task) => {
-      const { priorityName } = definePriority(task.priority);
-      task.priorityName = priorityName;
-    });
-    setTasks(TaskList);
+    setTasks(
+      TaskList.map((task) => {
+        return { ...definePriority(task) };
+      })
+    );
   }, []);
 
   return (

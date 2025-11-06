@@ -1,6 +1,5 @@
 import { Card, Space, Typography, Flex, Divider } from "antd";
 import { CommentOutlined } from "@ant-design/icons";
-import { definePriority } from "../../utils";
 import useTasks from "../../context/useTasks";
 import "../../styles/cardStyle.css";
 
@@ -22,8 +21,7 @@ export default function DeletedCards() {
     <Space direction="vertical" style={{ width: "100%" }} size="middle">
       {tasks
         .filter((task) => task.status === "deleted")
-        .map((preTask) => {
-          const task = definePriority(preTask);
+        .map((task) => {
           return (
             <Card
               key={task.id}

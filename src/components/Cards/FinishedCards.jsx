@@ -1,6 +1,6 @@
 import { Card, Space, Typography, Flex, Divider } from "antd";
 import { CommentOutlined } from "@ant-design/icons";
-import { definePriority, Quote } from "../../utils";
+import { Quote } from "../../utils";
 import useTasks from "../../context/useTasks";
 import "../../styles/cardStyle.css";
 
@@ -10,8 +10,7 @@ export default function FinishedCards() {
     <Space direction="vertical" style={{ width: "100%" }} size="middle">
       {tasks
         .filter((task) => task.status === "finished")
-        .map((preTask) => {
-          const task = definePriority(preTask);
+        .map((task) => {
           return (
             <Card key={task.id} className={"finished-card"}>
               <Flex align="center">
