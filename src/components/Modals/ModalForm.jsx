@@ -1,6 +1,7 @@
 import { Form, Input, Button, Flex, Select, DatePicker } from "antd";
 import { useState, useEffect } from "react";
 import { EditOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
+import { definePriority } from "../../utils";
 import SelectNote from "./SelectNote";
 import useTasks from "../../context/useTasks";
 import dayjs from "dayjs";
@@ -52,13 +53,13 @@ export default function ModalForm({ onClose, type, editId }) {
 
     if (type === "create") {
       newTask.id = crypto.randomUUID();
-      addTask(newTask);
+      addTask(definePriority(newTask));
     } else if (type === "edit") {
       const updatedTasks = tasks.map((task) => {
         if (task.id === editId) {
-          return { ...task, ...newTask };
+          return definePriority({ ...task, ...newTask });
         }
-        return task;
+        return definePriority(task);
       });
       setTasks(updatedTasks);
     }
