@@ -9,6 +9,7 @@ import {
   Modal,
   Input,
   Select,
+  Tooltip,
 } from "antd";
 import {
   CommentOutlined,
@@ -124,11 +125,13 @@ export default function ActiveCards() {
           options={options}
           prefix={<FilterOutlined />}
         />
-        <Button onClick={changeSorting}>
-          {sorting === 0 && <CaretUpFilled />}
-          {sorting === 1 && <CaretDownFilled />}
-          {sorting === 2 && <CloseCircleFilled />}
-        </Button>
+        <Tooltip title="Сортировка по приоритету" placement="topRight">
+          <Button onClick={changeSorting}>
+            {sorting === 0 && <CaretUpFilled />}
+            {sorting === 1 && <CaretDownFilled />}
+            {sorting === 2 && <CloseCircleFilled />}
+          </Button>
+        </Tooltip>
       </Flex>
       {tasks
         .filter(
