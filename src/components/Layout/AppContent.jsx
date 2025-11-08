@@ -1,5 +1,6 @@
-import { Layout } from "antd";
+import { Layout, Flex } from "antd";
 import CardList from "../Cards/CardList";
+import Additionals from "../Additionals/Additionals";
 
 export default function AppContent() {
   const contentStyle = {
@@ -12,7 +13,10 @@ export default function AppContent() {
 
   return (
     <Layout.Content style={contentStyle}>
-      <CardList />
+      <Flex align="flex-start">
+        <CardList />
+        <Additionals />
+      </Flex>
     </Layout.Content>
   );
 }

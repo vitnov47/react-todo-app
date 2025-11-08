@@ -34,7 +34,7 @@ export default function CardList() {
 
   return (
     <Card
-      style={{ width: "30%" }}
+      style={{ width: "35%" }}
       tabList={tabListNoTitle}
       activeTabKey={activeTabKey}
       tabBarExtraContent={<a href="#">More</a>}
