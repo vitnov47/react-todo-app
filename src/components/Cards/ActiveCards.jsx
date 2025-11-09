@@ -25,6 +25,7 @@ import "../../styles/cardStyle.css";
 import ModalEdit from "../Modals/ModalEdit";
 import useTasks from "../../context/useTasks";
 import { motion, AnimatePresence } from "framer-motion";
+import { defineIcon } from "../../utils";
 import { useState } from "react";
 
 export default function ActiveCards() {
@@ -172,7 +173,7 @@ export default function ActiveCards() {
                   ) : (
                     <>
                       <Flex align="center">
-                        {task.icon}
+                        {defineIcon(task)}
                         <Divider type="vertical" style={{ height: "6rem" }} />
                         <Space direction="vertical" style={{ width: "100%" }}>
                           <Typography.Title

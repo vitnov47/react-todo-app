@@ -65,12 +65,12 @@ export default function Additionals() {
         width: "60%",
       }}
     >
-      <Typography.Text style={{ color: "white" }}>
+      <Typography.Text style={{ color: "white", fontSize: "1rem" }} strong>
         Прогресс выполнения
       </Typography.Text>
       <Progress
         style={{ marginBottom: 15 }}
-        size={[300, 30]}
+        size={["100%", 30]}
         percent={percent}
         strokeColor={{
           "0%": "#108ee9",
@@ -79,7 +79,7 @@ export default function Additionals() {
         trailColor="#e4e4e4ff"
         percentPosition={{ align: "center", type: "inner" }}
       />
-      <Typography.Text style={{ color: "white" }}>
+      <Typography.Text style={{ color: "white", fontSize: "1rem" }} strong>
         Напоминалочка
       </Typography.Text>
       <Calendar

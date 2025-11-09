@@ -4,7 +4,15 @@ import { TaskList } from "./TaskList";
 import { definePriority } from "../utils";
 
 export default function TaskListProvider({ children }) {
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState(() => {
+    const saved = localStorage.getItem("tasks");
+    if (saved) return JSON.parse(saved);
+    return TaskList.map((task) => definePriority(task));
+  });
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   function addTask(task) {
     setTasks([...tasks, task]);
@@ -13,14 +21,6 @@ export default function TaskListProvider({ children }) {
   function removeTask(removeId) {
     setTasks(tasks.filter((task) => task.id != removeId));
   }
-
-  useEffect(() => {
-    setTasks(
-      TaskList.map((task) => {
-        return { ...definePriority(task) };
-      })
-    );
-  }, []);
 
   return (
     <TaskContext.Provider value={{ tasks, setTasks, addTask, removeTask }}>

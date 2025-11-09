@@ -1,6 +1,6 @@
 import { Typography } from "antd";
 
-import easyTaskImg from "./img/easyTask.svg";
+import lowTaskImg from "./img/lowTask.svg";
 import middleTaskImg from "./img/middleTask.svg";
 import hardTaskImg from "./img/hardTask.svg";
 import unbeliavableTaskImg from "./img/unbelievableTask.svg";
@@ -12,50 +12,59 @@ export function definePriority(task) {
   let priorityOrder = 1;
   switch (task.priority) {
     case "low":
-      icon = (
-        <img
-          src={easyTaskImg}
-          style={{ width: "8rem", height: "8rem", borderRadius: 10 }}
-        />
-      );
       color = "#58F55A";
       priorityName = "Низкий";
       break;
     case "middle":
-      icon = (
-        <img
-          src={middleTaskImg}
-          style={{ width: "8rem", height: "8rem", borderRadius: 10 }}
-        />
-      );
       color = "#E6E62E";
       priorityName = "Средний";
       priorityOrder = 2;
       break;
     case "high":
-      icon = (
-        <img
-          src={hardTaskImg}
-          style={{ width: "8rem", height: "8rem", borderRadius: 10 }}
-        />
-      );
       color = "#F2AE00";
       priorityName = "Высокий";
       priorityOrder = 3;
       break;
     case "unbelievable":
-      icon = (
-        <img
-          src={unbeliavableTaskImg}
-          style={{ width: "8rem", height: "8rem", borderRadius: 10 }}
-        />
-      );
       color = "#F72D1E";
       priorityName = "Ну капец какой";
       priorityOrder = 4;
       break;
   }
   return { ...task, icon, color, priorityName, priorityOrder };
+}
+
+export function defineIcon(task) {
+  switch (task.priority) {
+    case "low":
+      return (
+        <img
+          src={lowTaskImg}
+          style={{ width: "8rem", height: "8rem", borderRadius: 10 }}
+        />
+      );
+    case "middle":
+      return (
+        <img
+          src={middleTaskImg}
+          style={{ width: "8rem", height: "8rem", borderRadius: 10 }}
+        />
+      );
+    case "high":
+      return (
+        <img
+          src={hardTaskImg}
+          style={{ width: "8rem", height: "8rem", borderRadius: 10 }}
+        />
+      );
+    case "unbelievable":
+      return (
+        <img
+          src={unbeliavableTaskImg}
+          style={{ width: "8rem", height: "8rem", borderRadius: 10 }}
+        />
+      );
+  }
 }
 
 export function Quote() {

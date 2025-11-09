@@ -3,6 +3,7 @@ import { useState } from "react";
 import ActiveCards from "./ActiveCards";
 import FinishedCards from "./FinishedCards";
 import DeletedCards from "./DeletedCards";
+import "../../styles/cardList.css";
 
 export default function CardList() {
   const [activeTabKey, setActiveTabKey] = useState("active");
@@ -22,6 +23,10 @@ export default function CardList() {
     },
   ];
 
+  const resetStorage = () => {
+    localStorage.clear();
+  };
+
   const onTabChange = (key) => {
     setActiveTabKey(key);
   };
@@ -34,10 +39,14 @@ export default function CardList() {
 
   return (
     <Card
-      style={{ width: "35%" }}
+      className="card-list"
       tabList={tabListNoTitle}
       activeTabKey={activeTabKey}
-      tabBarExtraContent={<a href="#">More</a>}
+      tabBarExtraContent={
+        <a href="#" onClick={resetStorage}>
+          Очистить сохранения
+        </a>
+      }
       onTabChange={onTabChange}
       tabProps={{
         size: "middle",

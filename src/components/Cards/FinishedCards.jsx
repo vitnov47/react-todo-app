@@ -1,6 +1,6 @@
 import { Card, Space, Typography, Flex, Divider } from "antd";
 import { CommentOutlined } from "@ant-design/icons";
-import { Quote } from "../../utils";
+import { defineIcon, Quote } from "../../utils";
 import { motion } from "framer-motion";
 import useTasks from "../../context/useTasks";
 import "../../styles/cardStyle.css";
@@ -21,7 +21,7 @@ export default function FinishedCards() {
             >
               <Card key={task.id} className={"finished-card"}>
                 <Flex align="center">
-                  {task.icon}
+                  {defineIcon(task)}
                   <Divider type="vertical" style={{ height: "6rem" }} />
                   <Space direction="vertical" style={{ width: "100%" }}>
                     <Typography.Title

@@ -1,0 +1,12 @@
+.card-list {
+  width: 35%;
+  height: 80vh;
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+.card-list::-webkit-scrollbar {
+  width: 0px; /* Chrome, Safari, Edge */
+  background: transparent;
+}

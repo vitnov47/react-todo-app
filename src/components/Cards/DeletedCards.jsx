@@ -1,6 +1,7 @@
 import { Card, Space, Typography, Flex, Divider } from "antd";
 import { CommentOutlined } from "@ant-design/icons";
 import { motion, AnimatePresence } from "framer-motion";
+import { defineIcon } from "../../utils";
 import useTasks from "../../context/useTasks";
 import "../../styles/cardStyle.css";
 
@@ -40,7 +41,7 @@ export default function DeletedCards() {
                   hoverable
                 >
                   <Flex align="center">
-                    {task.icon}
+                    {defineIcon(task)}
                     <Divider type="vertical" style={{ height: "6rem" }} />
                     <Space direction="vertical" style={{ width: "100%" }}>
                       <Typography.Title
